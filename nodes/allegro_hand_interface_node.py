@@ -46,6 +46,8 @@ from rclpy.action import ActionClient
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup, ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
+from rclpy.parameter import Parameter
+from rcl_interfaces.msg import ParameterDescriptor, ParameterType
 
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64MultiArray
@@ -76,10 +78,22 @@ class AllegroHandInterfaceNode(Node):
         # ---- Parameters (launch passes everything from allegro_hand_config.yaml) ----
         self.declare_parameter('use_mock', False)
         self.declare_parameter('namespace', namespace)
-        self.declare_parameter('hand_joint_names', [])
+        # Explicit types: an empty-list default is inferred as BYTE_ARRAY.
+        self.declare_parameter(
+            'hand_joint_names', Parameter.Type.STRING_ARRAY,
+            ParameterDescriptor(type=ParameterType.PARAMETER_STRING_ARRAY)
+        )
+        # Optional, so [] default with dynamic typing.
+        self.declare_parameter(
+            'driver_joint_names', [],
+            ParameterDescriptor(dynamic_typing=True)
+        )
         self.declare_parameter('prefix', 'ah_')
         self.declare_parameter('publish_rate', 50.0)
-        self.declare_parameter('home_joints', [])
+        self.declare_parameter(
+            'home_joints', Parameter.Type.DOUBLE_ARRAY,
+            ParameterDescriptor(type=ParameterType.PARAMETER_DOUBLE_ARRAY)
+        )
         self.declare_parameter('move_tolerance', 0.02)
         self.declare_parameter('move_timeout', 5.0)
         self.declare_parameter('auto_home_on_startup', False)
@@ -96,6 +110,9 @@ class AllegroHandInterfaceNode(Node):
         self._namespace = self.get_parameter('namespace').get_parameter_value().string_value
         self.hand_joint_names = list(
             self.get_parameter('hand_joint_names').get_parameter_value().string_array_value
+        )
+        self._driver_joint_names = list(
+            self.get_parameter('driver_joint_names').get_parameter_value().string_array_value
         )
         self._prefix = self.get_parameter('prefix').get_parameter_value().string_value
         self.publish_rate = self.get_parameter('publish_rate').get_parameter_value().double_value
@@ -122,6 +139,17 @@ class AllegroHandInterfaceNode(Node):
                 "Continuing with whatever was passed in."
             )
         self._n_joints = len(self.hand_joint_names)
+
+        # Driver names in /joint_states (e.g. ah_joint00); default: hand_joint_names.
+        if not self._driver_joint_names:
+            self._driver_joint_names = list(self.hand_joint_names)
+        elif len(self._driver_joint_names) != len(self.hand_joint_names):
+            self.get_logger().warn(
+                f"driver_joint_names length ({len(self._driver_joint_names)}) != "
+                f"hand_joint_names length ({len(self.hand_joint_names)}); "
+                "falling back to hand_joint_names for the incoming lookup."
+            )
+            self._driver_joint_names = list(self.hand_joint_names)
 
         if self._home_joints and len(self._home_joints) != self._n_joints:
             self.get_logger().warn(
@@ -228,7 +256,7 @@ class AllegroHandInterfaceNode(Node):
         # Build name -> idx map from the incoming msg
         idx_map = {n: i for i, n in enumerate(msg.name)}
         try:
-            indices = [idx_map[n] for n in self.hand_joint_names]
+            indices = [idx_map[n] for n in self._driver_joint_names]
         except KeyError:
             # Hand joints not in this message — could be a different robot's joint_states.
             return
