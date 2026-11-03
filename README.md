@@ -85,6 +85,56 @@ robot.update_pose([0.5, 0.0, 0.5, 0.0, 0.0, 0.0], velocity=False)
 robot.update_gripper(0.04)  # Open to 4 cm
 ```
 
+### UF850 + Allegro Hand (single arm / bimanual)
+
+Uses two external repositories in addition to role-ros2. They are only needed for this
+setup (Franka / xArm6-only users can skip this):
+
+| Repository | Branch | Provides |
+|---|---|---|
+| [xArm-Developer/xarm_ros2](https://github.com/xArm-Developer/xarm_ros2) | `humble` | `xarm_description` (UF850 meshes) |
+| [DusGor/allegro_hand_ros2_v4](https://github.com/DusGor/allegro_hand_ros2_v4) (fork of [Wonik's](https://github.com/Wonikrobotics-git/allegro_hand_ros2_v4), right thumb tip fix) | `hand_description_fix` | Allegro V4 driver, controllers, `allegro_hand_v4_description` |
+
+**Recommended: Docker.** The `ros2_xarm_allegro` image contains everything (xArm SDK,
+ros2_control controllers, both repos pinned to xarm_ros2 `62936f7` and allegro_hand_ros2
+`aecb1e9`). See [docker/ros2_xarm_allegro/README.md](docker/ros2_xarm_allegro/README.md).
+
+```bash
+docker compose -f docker/ros2_xarm_allegro/docker-compose.yaml build
+docker compose -f docker/ros2_xarm_allegro/docker-compose.yaml up -d
+docker exec -it ros2_xarm_allegro_container bash
+ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true
+```
+
+**Without Docker:** install the apt and pip packages listed in
+[`docker/ros2_xarm_allegro/Dockerfile`](docker/ros2_xarm_allegro/Dockerfile), then:
+
+```bash
+cd /app/ros2_ws/src
+git clone -b humble https://github.com/xArm-Developer/xarm_ros2.git
+git clone -b hand_description_fix https://github.com/DusGor/allegro_hand_ros2_v4.git allegro_hand_ros2
+touch allegro_hand_ros2/allegro_hand_hardwares/gazebo/plugin/COLCON_IGNORE
+cd /app/ros2_ws
+colcon build --symlink-install \
+  --packages-up-to role_ros2 xarm_description \
+    allegro_hand_bringup allegro_hand_control_msgs allegro_hand_v4_description \
+    allegro_hand_v4_hardware allegro_hand_position_effort_controller
+source install/setup.bash
+```
+
+Do not build all of `xarm_ros2` (its MoveIt/Gazebo packages are not needed and require
+extra dependencies). Clone `allegro_hand_ros2` only once — either here or inside
+`role-ros2/` as described in `docker/ros2_allegro/README.md`, not both.
+
+The Allegro posture/grasp primitives (`reset` and `grasp_primitive` services) are disabled
+by default (`hand_grasp_controllers:=false`): Wonik's prebuilt grasp library requires
+pinocchio 3.6.0, while ROS Humble currently ships 4.0.0. Joint-position control
+(teleoperation, learned policies) is unaffected.
+
+Launch (mock): `ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true`
+— bimanual: `ros2 launch role_ros2 bimanual_xarm_robot.launch.py use_mock:=true`.
+Model sources and regeneration: [`role_ros2/robot_ik/xarm/xacro/README.md`](role_ros2/robot_ik/xarm/xacro/README.md).
+
 ### Robot Environment (Gym-compatible)
 
 ```python

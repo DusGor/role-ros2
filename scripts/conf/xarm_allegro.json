@@ -1,0 +1,14 @@
+[
+    {
+        "name": "UF850 + Allegro (Mock)",
+        "container": "ros2_xarm_allegro_container",
+        "command": "ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true",
+        "kill_keyword": "xarm_allegro_robot.launch.py"
+    },
+    {
+        "name": "Rviz2",
+        "container": "ros2_xarm_allegro_container",
+        "command": "cd /app/ros2_ws/src/role-ros2 && ros2 run rviz2 rviz2 -d config/rviz/xarm.rviz",
+        "kill_keyword": "rviz2 -d config/rviz/xarm.rviz"
+    }
+]
