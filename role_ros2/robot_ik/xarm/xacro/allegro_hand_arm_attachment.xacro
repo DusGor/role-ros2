@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="allegro_hand_arm_attachment">
+
+  <!-- Mounts an Allegro Hand V4 (left/right) on an arm flange, via the lab wrist
+       adapter or a direct fixed joint. -->
+
+  <xacro:macro name="attach_allegro_hand" params="
+    prefix:=''
+    side
+    parent
+    add_wrist_adapter:=true
+    add_camera:=true
+    connector_xyz:='0 0 0'
+    connector_rpy:='0 0 0'
+    camera_rpy:='0 0 0'
+    hand_xyz:='0 0 0'
+    hand_rpy:='0 0 0'
+    ">
+
+    <!-- Hand (left/right) -->
+    <xacro:if value="${side == 'left'}">
+      <xacro:include filename="$(find allegro_hand_v4_description)/urdf/allegro_hand_description_left.xacro" />
+      <xacro:allegro_hand_left prefix="${prefix}hand_" />
+    </xacro:if>
+    <xacro:if value="${side == 'right'}">
+      <xacro:include filename="$(find allegro_hand_v4_description)/urdf/allegro_hand_description_right.xacro" />
+      <xacro:allegro_hand_right prefix="${prefix}hand_" />
+    </xacro:if>
+
+    <!-- Mount: lab wrist adapter or direct fixed joint -->
+    <xacro:if value="${add_wrist_adapter}">
+      <xacro:include filename="lab_wrist_adapter.xacro" />
+      <xacro:lab_wrist_adapter prefix="${prefix}" parent="${parent}"
+        hand_child="${prefix}hand_base_link" add_camera="${add_camera}"
+        connector_xyz="${connector_xyz}" connector_rpy="${connector_rpy}"
+        camera_rpy="${camera_rpy}" />
+    </xacro:if>
+    <xacro:unless value="${add_wrist_adapter}">
+      <joint name="${prefix}hand_mount_joint" type="fixed">
+        <parent link="${parent}" />
+        <child link="${prefix}hand_base_link" />
+        <origin xyz="${hand_xyz}" rpy="${hand_rpy}" />
+      </joint>
+    </xacro:unless>
+
+  </xacro:macro>
+</robot>

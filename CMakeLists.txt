@@ -188,8 +188,12 @@ install(DIRECTORY role_ros2/robot_ik/franka/mesh/
 )
 
 # Install xArm URDF and meshes (for robot_state_publisher in xarm_robot.launch.py)
+# uf850_allegro_*.urdf are generated from role_ros2/robot_ik/xarm/xacro/ (see README there) and committed.
 install(FILES
   role_ros2/robot_ik/xarm/xarm6.urdf
+  role_ros2/robot_ik/xarm/uf850_allegro_bimanual.urdf
+  role_ros2/robot_ik/xarm/uf850_allegro_left.urdf
+  role_ros2/robot_ik/xarm/uf850_allegro_right.urdf
   DESTINATION share/${PROJECT_NAME}/robot_ik/xarm
 )
 install(DIRECTORY role_ros2/robot_ik/xarm/meshes/

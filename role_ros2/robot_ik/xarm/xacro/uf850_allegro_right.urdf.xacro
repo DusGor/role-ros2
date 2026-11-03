@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="uf850_allegro_right" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Single UF850 with a right Allegro Hand V4.
+       Generates ../uf850_allegro_right.urdf via ./generate_urdfs.sh. -->
+
+  <xacro:arg name="prefix" default="" />
+
+  <xacro:arg name="attach_xyz" default="0 0 0" />
+  <xacro:arg name="attach_rpy" default="0 0 0" />
+
+  <xacro:arg name="dof" default="6" />
+  <xacro:arg name="robot_type" default="uf850" />
+  <xacro:arg name="add_gripper" default="false" />
+  <xacro:arg name="robot_ip" default="" />
+
+  <!-- Lab wrist adapter + camera holder (lab_wrist_adapter.xacro) -->
+  <xacro:arg name="add_wrist_adapter" default="true" />
+  <xacro:arg name="add_camera_mount" default="true" />
+  <xacro:arg name="connector_xyz" default="0.05 0.025 0.003" />
+  <xacro:arg name="connector_rpy" default="0 0 3.14159" />
+  <xacro:arg name="camera_rpy" default="3.14 0 0.8" />
+
+  <!-- Only used with add_wrist_adapter:=false -->
+  <xacro:arg name="hand_xyz" default="0 0 0" />
+  <xacro:arg name="hand_rpy" default="0 0 0" />
+
+  <xacro:include filename="$(find xarm_description)/urdf/xarm_device.urdf.xacro" />
+
+  <xacro:include filename="allegro_hand_arm_attachment.xacro" />
+  <xacro:attach_allegro_hand prefix="$(arg prefix)" side="right" parent="$(arg prefix)link_eef"
+    add_wrist_adapter="$(arg add_wrist_adapter)" add_camera="$(arg add_camera_mount)"
+    connector_xyz="$(arg connector_xyz)" connector_rpy="$(arg connector_rpy)"
+    camera_rpy="$(arg camera_rpy)" hand_xyz="$(arg hand_xyz)" hand_rpy="$(arg hand_rpy)" />
+
+</robot>

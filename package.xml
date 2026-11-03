@@ -39,6 +39,12 @@
   <exec_depend>launch_ros</exec_depend>
   <exec_depend>rosidl_default_runtime</exec_depend>
 
+  <!-- the uf850_allegro_*.urdf models reference package:// meshes from
+  xarm_description and allegro_hand_v4_description
+  (needed by RViz at runtime, and by xacro/generate_urdfs.sh) -->
+  <exec_depend>xarm_description</exec_depend>
+  <exec_depend>allegro_hand_v4_description</exec_depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

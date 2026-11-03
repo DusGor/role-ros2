@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lab_wrist_adapter">
+
+  <!-- Lab wrist adapter plate (flange -> Allegro hand) and camera holder.
+       connector_xyz/rpy and camera_rpy differ per side and have no defaults.
+       hand_mount_xyz/rpy: CAD connector -> palm pose, composed with the inverse of
+       the Allegro macro's 0.095 m base_link -> palm_link offset. -->
+
+  <xacro:macro name="lab_wrist_adapter" params="
+    prefix:=''
+    parent
+    hand_child
+    connector_xyz
+    connector_rpy
+    hand_mount_xyz:='0.05007565 0.08399994 0.05892435'
+    hand_mount_rpy:='0 -1.57 1.57'
+    add_camera:=true
+    camera_xyz:='0 0 0.003'
+    camera_rpy
+    camera_mount_xyz:='-0.11 0 -0.07'
+    camera_mount_rpy:='0 0.785 0'
+    ">
+
+    <!-- Adapter plate -->
+    <link name="${prefix}hand_connector">
+      <visual>
+        <geometry>
+          <mesh filename="package://role_ros2/robot_ik/xarm/meshes/visual/final_connector.stl" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="${prefix}lab_adapter_red">
+          <color rgba="0.8 0.0 0.0 1.0" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://role_ros2/robot_ik/xarm/meshes/collision/final_connector.stl" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </collision>
+      <inertial>
+        <mass value="0.05" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia ixx="1e-5" ixy="0.0" ixz="0.0" iyy="1e-5" iyz="0.0" izz="1e-5" />
+      </inertial>
+    </link>
+
+    <joint name="${prefix}link_eef_to_hand_connector_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="${prefix}hand_connector" />
+      <origin xyz="${connector_xyz}" rpy="${connector_rpy}" />
+    </joint>
+
+    <joint name="${prefix}hand_connector_to_hand_mount_joint" type="fixed">
+      <parent link="${prefix}hand_connector" />
+      <child link="${hand_child}" />
+      <origin xyz="${hand_mount_xyz}" rpy="${hand_mount_rpy}" />
+    </joint>
+
+    <!-- Camera holder (on the flange) -->
+    <xacro:if value="${add_camera}">
+      <link name="${prefix}camera_connector">
+        <visual>
+          <geometry>
+            <mesh filename="package://role_ros2/robot_ik/xarm/meshes/visual/camera_holder.stl" />
+          </geometry>
+          <material name="${prefix}lab_adapter_red" />
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://role_ros2/robot_ik/xarm/meshes/collision/camera_holder.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="0.02" />
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6" />
+        </inertial>
+      </link>
+
+      <joint name="${prefix}camera_connector_to_link_eef_joint" type="fixed">
+        <parent link="${parent}" />
+        <child link="${prefix}camera_connector" />
+        <origin xyz="${camera_xyz}" rpy="${camera_rpy}" />
+      </joint>
+
+      <!-- Camera mount point -->
+      <link name="${prefix}camera_virtual_base" />
+
+      <joint name="${prefix}camera_connector_to_camera_virtual_base_joint" type="fixed">
+        <parent link="${prefix}camera_connector" />
+        <child link="${prefix}camera_virtual_base" />
+        <origin xyz="${camera_mount_xyz}" rpy="${camera_mount_rpy}" />
+      </joint>
+    </xacro:if>
+
+  </xacro:macro>
+</robot>

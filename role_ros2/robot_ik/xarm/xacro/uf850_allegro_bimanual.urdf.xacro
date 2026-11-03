@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot name="uf850_allegro_bimanual" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Bimanual UF850 with an Allegro Hand V4 on each arm.
+       Generates ../uf850_allegro_bimanual.urdf via ./generate_urdfs.sh. -->
+
+  <!-- Must match the joint names in config/bimanual_xarm_robot_config.yaml -->
+  <xacro:arg name="prefix_1" default="left_" />
+  <xacro:arg name="prefix_2" default="right_" />
+
+  <!-- Arm base poses in the world frame -->
+  <xacro:arg name="attach_xyz_1" default="-0.274 -0.475 0.01" />
+  <xacro:arg name="attach_rpy_1" default="0 0 0" />
+  <xacro:arg name="attach_xyz_2" default="-0.274 0.475 0.01" />
+  <xacro:arg name="attach_rpy_2" default="0 0 0" />
+
+  <xacro:arg name="dof_1" default="6" />
+  <xacro:arg name="dof_2" default="6" />
+  <xacro:arg name="robot_type_1" default="uf850" />
+  <xacro:arg name="robot_type_2" default="uf850" />
+
+  <xacro:arg name="add_gripper_1" default="false" />
+  <xacro:arg name="add_gripper_2" default="false" />
+
+  <xacro:arg name="robot_ip_1" default="" />
+  <xacro:arg name="robot_ip_2" default="" />
+
+  <!-- Lab wrist adapter + camera holder (lab_wrist_adapter.xacro) -->
+  <xacro:arg name="add_wrist_adapter" default="true" />
+  <xacro:arg name="add_camera_mount" default="true" />
+
+  <!-- Flange -> adapter offsets differ per side (mirrored yaw, negated xy) -->
+  <xacro:arg name="connector_xyz_1" default="-0.05 -0.025 0.003" />
+  <xacro:arg name="connector_rpy_1" default="0 0 0" />
+  <xacro:arg name="camera_rpy_1" default="3.14 0 -0.8" />
+  <xacro:arg name="connector_xyz_2" default="0.05 0.025 0.003" />
+  <xacro:arg name="connector_rpy_2" default="0 0 3.14159" />
+  <xacro:arg name="camera_rpy_2" default="3.14 0 0.8" />
+
+  <!-- Only used with add_wrist_adapter:=false -->
+  <xacro:arg name="hand_xyz" default="0 0 0" />
+  <xacro:arg name="hand_rpy" default="0 0 0" />
+
+  <xacro:include filename="$(find xarm_description)/urdf/dual_xarm_device.urdf.xacro" />
+
+  <xacro:include filename="allegro_hand_arm_attachment.xacro" />
+
+  <xacro:attach_allegro_hand prefix="$(arg prefix_1)" side="left" parent="$(arg prefix_1)link_eef"
+    add_wrist_adapter="$(arg add_wrist_adapter)" add_camera="$(arg add_camera_mount)"
+    connector_xyz="$(arg connector_xyz_1)" connector_rpy="$(arg connector_rpy_1)"
+    camera_rpy="$(arg camera_rpy_1)" hand_xyz="$(arg hand_xyz)" hand_rpy="$(arg hand_rpy)" />
+
+  <xacro:attach_allegro_hand prefix="$(arg prefix_2)" side="right" parent="$(arg prefix_2)link_eef"
+    add_wrist_adapter="$(arg add_wrist_adapter)" add_camera="$(arg add_camera_mount)"
+    connector_xyz="$(arg connector_xyz_2)" connector_rpy="$(arg connector_rpy_2)"
+    camera_rpy="$(arg camera_rpy_2)" hand_xyz="$(arg hand_xyz)" hand_rpy="$(arg hand_rpy)" />
+
+</robot>
