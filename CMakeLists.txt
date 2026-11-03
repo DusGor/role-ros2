@@ -130,18 +130,13 @@ install(PROGRAMS
 #   python3 scripts/collect_trajectory_franka.py --task pick_and_place
 #   python3 scripts/replay_trajectory.py --filepath /path/to/trajectory.h5
 
-# Install Python package
-# Install to both site-packages (ROS2 Foxy) and dist-packages (ROS2 Humble) for compatibility
+# Install the Python package next to the rosidl-generated messages (role_ros2.msg/.srv/.action).
+# PYTHON_INSTALL_DIR is set per distro by ament_cmake_python (Foxy: lib/python3.8/site-packages,
+# Humble: local/lib/python3.10/dist-packages). Installing to both locations made a msg-less
+# copy shadow the real package on Humble.
 install(DIRECTORY role_ros2
-  DESTINATION lib/python${PYTHON_VERSION}/site-packages
-  FILES_MATCHING 
-    PATTERN "*.py"
-    PATTERN "__pycache__" EXCLUDE
-    PATTERN "*.pyc" EXCLUDE
-)
-install(DIRECTORY role_ros2
-  DESTINATION local/lib/python${PYTHON_VERSION}/dist-packages
-  FILES_MATCHING 
+  DESTINATION ${PYTHON_INSTALL_DIR}
+  FILES_MATCHING
     PATTERN "*.py"
     PATTERN "__pycache__" EXCLUDE
     PATTERN "*.pyc" EXCLUDE
@@ -203,41 +198,16 @@ install(DIRECTORY role_ros2/robot_ik/xarm/meshes/
     PATTERN "*.stl"
 )
 
-# Install XML model files (needed by RobotIKSolver)
-install(FILES
-  role_ros2/robot_ik/franka/fr3.xml
-  DESTINATION lib/python${PYTHON_VERSION}/site-packages/role_ros2/robot_ik/franka
-)
-install(FILES
-  role_ros2/robot_ik/franka/fr3.xml
-  DESTINATION local/lib/python${PYTHON_VERSION}/dist-packages/role_ros2/robot_ik/franka
-)
-
-# Install mesh directory (needed by fr3.xml for RobotIKSolver)
-# Note: Using trailing slash to install contents directly
+# Install XML model / mesh / texture files (needed by RobotIKSolver)
+install(FILES role_ros2/robot_ik/franka/fr3.xml
+  DESTINATION ${PYTHON_INSTALL_DIR}/role_ros2/robot_ik/franka)
 install(DIRECTORY role_ros2/robot_ik/franka/mesh/
-  DESTINATION lib/python${PYTHON_VERSION}/site-packages/role_ros2/robot_ik/franka/mesh
-  FILES_MATCHING
-    PATTERN "*.obj"
-)
-install(DIRECTORY role_ros2/robot_ik/franka/mesh/
-  DESTINATION local/lib/python${PYTHON_VERSION}/dist-packages/role_ros2/robot_ik/franka/mesh
-  FILES_MATCHING
-    PATTERN "*.obj"
-)
+  DESTINATION ${PYTHON_INSTALL_DIR}/role_ros2/robot_ik/franka/mesh
+  FILES_MATCHING PATTERN "*.obj")
+install(DIRECTORY role_ros2/robot_ik/franka/texture/
+  DESTINATION ${PYTHON_INSTALL_DIR}/role_ros2/robot_ik/franka/texture
+  FILES_MATCHING PATTERN "*.png")
 
-# Install texture directory (needed by fr3.xml for RobotIKSolver)
-# Note: Using trailing slash to install contents directly
-install(DIRECTORY role_ros2/robot_ik/franka/texture/
-  DESTINATION lib/python${PYTHON_VERSION}/site-packages/role_ros2/robot_ik/franka/texture
-  FILES_MATCHING
-    PATTERN "*.png"
-)
-install(DIRECTORY role_ros2/robot_ik/franka/texture/
-  DESTINATION local/lib/python${PYTHON_VERSION}/dist-packages/role_ros2/robot_ik/franka/texture
-  FILES_MATCHING
-    PATTERN "*.png"
-)
 
 
 if(BUILD_TESTING)
