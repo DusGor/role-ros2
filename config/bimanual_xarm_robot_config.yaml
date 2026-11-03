@@ -1,0 +1,44 @@
+# Bimanual UF850 configuration for launch/bimanual_xarm_robot.launch.py.
+# Joint names match role_ros2/robot_ik/xarm/uf850_allegro_bimanual.urdf.
+
+urdf_file: "uf850_allegro_bimanual.urdf"
+
+# ============================================================================
+# Left Arm
+# ============================================================================
+left_arm:
+  robot_ip: ""  # TODO: xArm control box IP; empty -> mock
+  arm_namespace: "left_arm"
+  arm_joints:
+    - left_joint1
+    - left_joint2
+    - left_joint3
+    - left_joint4
+    - left_joint5
+    - left_joint6
+  use_mock: false
+  publish_rate: 50.0
+  home_joints: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  auto_reset_on_startup: false
+  auto_reset_delay: 5.0
+  ee_frame_id: "left_link_base"  # frame of ee_pose / arm_state
+
+# ============================================================================
+# Right Arm
+# ============================================================================
+right_arm:
+  robot_ip: ""  # TODO: xArm control box IP; empty -> mock
+  arm_namespace: "right_arm"
+  arm_joints:
+    - right_joint1
+    - right_joint2
+    - right_joint3
+    - right_joint4
+    - right_joint5
+    - right_joint6
+  use_mock: false
+  publish_rate: 50.0
+  home_joints: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  auto_reset_on_startup: false
+  auto_reset_delay: 5.0
+  ee_frame_id: "right_link_base"  # frame of ee_pose / arm_state

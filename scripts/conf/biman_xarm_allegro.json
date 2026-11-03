@@ -1,0 +1,13 @@
+[{
+        "name": "Bimanual UF850 + Allegro (Mock, arms only)",
+        "container": "ros2_xarm_allegro_container",
+        "command": "ros2 launch role_ros2 bimanual_xarm_robot.launch.py use_mock:=true",
+        "kill_keyword": "bimanual_xarm_robot.launch.py use_mock:=true"
+    },
+    {
+        "name": "Rviz2",
+        "container": "ros2_xarm_allegro_container",
+        "command": "cd /app/ros2_ws/src/role-ros2 && ros2 run rviz2 rviz2 -d config/rviz/biman_xarm.rviz",
+        "kill_keyword": "rviz2 -d config/rviz/biman_xarm.rviz"
+    }
+]
