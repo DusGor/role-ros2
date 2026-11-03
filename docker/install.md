@@ -11,6 +11,7 @@ The `docker/` directory provides several setups:
 3. **Camera + Franka robot**: Both containers run together for the full Franka stack.
 4. **xArm robot only**: ROS2 Humble + xarm-python-sdk (no GPU, no CUDA).
 5. **Allegro Hand only**: ROS2 Humble + ros2_control + the official allegro_hand_ros2 driver (CAN, no GPU).
+6. **UF850 + Allegro Hand (single arm / bimanual)**: ROS2 Humble + xarm-python-sdk + ros2_control + Allegro driver, external repos pinned in the image (no GPU).
 
 When to use which:
 
@@ -19,6 +20,7 @@ When to use which:
 - Camera + Franka robot → **ros2_cu118_franka_0.14.x** or **ros2_cu118_franka_0.18.x**
 - xArm robot → **ros2_xarm**
 - Allegro Hand → **ros2_allegro**
+- UF850 + Allegro Hand (single arm / bimanual) → **ros2_xarm_allegro**
 
 ## Subfolders
 
@@ -58,6 +60,12 @@ When to use which:
 - **Purpose**: Single image — ROS2 Humble + the full ros2_control stack required by the official Allegro Hand V4 driver (`allegro_hand_ros2/`). Talks to the hand over native Linux SocketCAN; no PCAN userspace lib needed. The role-ros2 wrapper (`allegro_hand_interface_node`) adapts the official ros2_control topics to role-ros2 conventions.
 - **Files**: `Dockerfile`, `docker-compose.yaml`, `entrypoint.sh`, `ros2_allegro.env`, `smoke_test.sh`
 - **Hardware prerequisite**: USB-CAN dongle on the host (e.g. PEAK PCAN-USB → `peak_usb` kernel module, or generic `gs_usb`). The container shares the host's `can0` via `network_mode: host` — no `/dev` passthrough or `privileged: true` is needed.
+
+### ros2_xarm_allegro
+
+- **Purpose**: Single image for the UF850 + Allegro Hand V4 setup (`xarm_allegro_robot.launch.py`, `bimanual_xarm_robot.launch.py`) — ROS2 Humble + xarm-python-sdk + the ros2_control stack, with `xarm_ros2` and `allegro_hand_ros2` built at pinned commits into an underlay (`/opt/ext_ws`). See [ros2_xarm_allegro/README.md](ros2_xarm_allegro/README.md).
+- **Files**: `Dockerfile`, `docker-compose.yaml`, `entrypoint.sh`, `ros2_xarm_allegro.env`, `smoke_test.sh`, `README.md`
+- **Hardware prerequisite**: same CAN setup as ros2_allegro for the hand(s); network access to the xArm controller box(es).
 
 ## Prerequisites
 
@@ -112,6 +120,12 @@ docker compose -f docker/ros2_xarm/docker-compose.yaml build
 
 ```bash
 docker compose -f docker/ros2_allegro/docker-compose.yaml build
+```
+
+### UF850 + Allegro Hand (ros2_xarm_allegro)
+
+```bash
+docker compose -f docker/ros2_xarm_allegro/docker-compose.yaml build
 ```
 
 ## X11 / xhost setup

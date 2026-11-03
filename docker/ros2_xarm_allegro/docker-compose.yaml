@@ -1,0 +1,25 @@
+# ROS2 Humble + UF850 (xArm SDK) + Allegro Hand V4.
+# CAN setup for the hand(s): allegro_hand_ros2/allegro_hand_bringup/getting_started_v4.md
+# (https://github.com/Wonikrobotics-git/allegro_hand_ros2_v4)
+
+services:
+  ros2_xarm_allegro:
+    image: ros2_xarm_allegro:humble
+    container_name: ros2_xarm_allegro_container
+    build:
+      context: ../..  # repo root (role-ros2/)
+      dockerfile: docker/ros2_xarm_allegro/Dockerfile
+    network_mode: host
+    ipc: host
+    stdin_open: true
+    tty: true
+    environment:
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-0}"
+      RMW_IMPLEMENTATION: "${RMW_IMPLEMENTATION:-rmw_fastrtps_cpp}"
+      FASTDDS_BUILTIN_TRANSPORTS: "${FASTDDS_BUILTIN_TRANSPORTS:-UDPv4}"
+      ROS_LOCALHOST_ONLY: "${ROS_LOCALHOST_ONLY:-0}"
+      DISPLAY: "${DISPLAY}"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /dev/shm:/dev/shm:rw
+      - ../../:/app/ros2_ws/src/role-ros2:rw
