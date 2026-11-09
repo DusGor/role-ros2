@@ -4,9 +4,10 @@
   <!-- Single UF850 with a right Allegro Hand V4.
        Generates ../uf850_allegro_right.urdf via ./generate_urdfs.sh. -->
 
-  <xacro:arg name="prefix" default="" />
+  <!-- Same names and base pose as the right side of uf850_allegro_bimanual.urdf.xacro -->
+  <xacro:arg name="prefix" default="right_" />
 
-  <xacro:arg name="attach_xyz" default="0 0 0" />
+  <xacro:arg name="attach_xyz" default="-0.274 -0.475 0.01" />
   <xacro:arg name="attach_rpy" default="0 0 0" />
 
   <xacro:arg name="dof" default="6" />

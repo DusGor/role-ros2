@@ -42,11 +42,11 @@ docker compose -f docker/ros2_xarm_allegro/docker-compose.yaml build \
 
 ```bash
 # Single UF850 + Allegro hand (mock arm + mock hand)
-ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true
-ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true hand_side:=left
+ros2 launch role_ros2 xarm_allegro_robot.launch.py setup:=right use_mock:=true hand_use_mock:=true
+ros2 launch role_ros2 xarm_allegro_robot.launch.py setup:=left use_mock:=true hand_use_mock:=true
 
-# Bimanual UF850 (arms only for now)
-ros2 launch role_ros2 bimanual_xarm_robot.launch.py use_mock:=true
+# Bimanual UF850 + both Allegro hands (mock arms + mock hands)
+ros2 launch role_ros2 bimanual_xarm_robot.launch.py use_mock:=true hand_use_mock:=true
 
 # RViz
 rviz2 -d /app/ros2_ws/src/role-ros2/config/rviz/xarm.rviz

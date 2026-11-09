@@ -103,7 +103,7 @@ ros2_control controllers, both repos pinned to xarm_ros2 `62936f7` and allegro_h
 docker compose -f docker/ros2_xarm_allegro/docker-compose.yaml build
 docker compose -f docker/ros2_xarm_allegro/docker-compose.yaml up -d
 docker exec -it ros2_xarm_allegro_container bash
-ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true
+ros2 launch role_ros2 xarm_allegro_robot.launch.py setup:=right use_mock:=true hand_use_mock:=true
 ```
 
 **Without Docker:** install the apt and pip packages listed in
@@ -131,8 +131,8 @@ by default (`hand_grasp_controllers:=false`): Wonik's prebuilt grasp library req
 pinocchio 3.6.0, while ROS Humble currently ships 4.0.0. Joint-position control
 (teleoperation, learned policies) is unaffected.
 
-Launch (mock): `ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true`
-— bimanual: `ros2 launch role_ros2 bimanual_xarm_robot.launch.py use_mock:=true`.
+Launch (mock): `ros2 launch role_ros2 xarm_allegro_robot.launch.py setup:=right use_mock:=true hand_use_mock:=true`
+— bimanual: `ros2 launch role_ros2 bimanual_xarm_robot.launch.py use_mock:=true hand_use_mock:=true`.
 Model sources and regeneration: [`role_ros2/robot_ik/xarm/xacro/README.md`](role_ros2/robot_ik/xarm/xacro/README.md).
 
 ### Robot Environment (Gym-compatible)

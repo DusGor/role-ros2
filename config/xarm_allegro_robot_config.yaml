@@ -10,8 +10,8 @@ robot_ip: "192.168.1.185"
 # ============================================================================
 # Joint Names Configuration
 # ============================================================================
-# The UF850 has 6 joints. Names are unprefixed to match
-# role_ros2/robot_ik/xarm/uf850_allegro_{left,right}.urdf.
+# The UF850 has 6 joints. The launch file prefixes them with the side ({setup}_joint1, ...), as in
+# role_ros2/robot_ik/xarm/uf850_allegro_{left,right,bimanual}.urdf.
 arm_joints:
   - joint1
   - joint2
@@ -20,16 +20,8 @@ arm_joints:
   - joint5
   - joint6
 
-# ============================================================================
-# Namespace Configuration
-# ============================================================================
-arm_namespace: "xarm6_arm"
-
-# Frame ID published in joint_states / arm_state / ee_pose headers.
-# Must match the URDF root link that the arm is attached to.
-ee_frame_id: "link_base"
-
-# URDF: uf850_allegro_{hand_side}.urdf, chosen by the launch file from hand_side.
+# Namespaces {setup}_arm / {setup}_hand, frame {setup}_link_base and the URDF
+# uf850_allegro_{setup}.urdf follow from the launch argument setup (right | left).
 
 # ============================================================================
 # Mode Settings
@@ -61,16 +53,15 @@ max_joint_velocity: 1.0   # rad/s
 # ============================================================================
 # Example Usage
 # ============================================================================
-#   ros2 launch role_ros2 xarm_allegro_robot.launch.py
-#   ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true
-#   ros2 launch role_ros2 xarm_allegro_robot.launch.py hand_side:=left
+#   ros2 launch role_ros2 xarm_allegro_robot.launch.py setup:=right
+#   ros2 launch role_ros2 xarm_allegro_robot.launch.py setup:=left use_mock:=true hand_use_mock:=true
 #
 # Send joint position command:
-#   ros2 topic pub --once /xarm6_arm/joint_position_controller/command \
+#   ros2 topic pub --once /right_arm/joint_position_controller/command \
 #       role_ros2/msg/JointPositionCommand \
 #       "{positions: [0.1, 0.0, 0.0, 0.0, 0.0, 0.0], blocking: false}"
 #
 # Move to joint positions (blocking):
-#   ros2 service call /xarm6_arm/move_to_joint_positions \
+#   ros2 service call /right_arm/move_to_joint_positions \
 #       role_ros2/srv/MoveToJointPositions \
 #       "{joint_positions: [0,0,0,0,0,0], time_to_go: 2.0}"

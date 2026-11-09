@@ -7,30 +7,30 @@
   <!-- Single UF850 with a left Allegro Hand V4.
        Generates ../uf850_allegro_left.urdf via ./generate_urdfs.sh. -->
   <!-- Insert at the beginning of xarm_device_macro.xacro -->
-  <material name="Black">
+  <material name="left_Black">
     <color rgba="0.0 0.0 0.0 1.0"/>
   </material>
-  <material name="Red">
+  <material name="left_Red">
     <color rgba="0.8 0.0 0.0 1.0"/>
   </material>
-  <material name="White">
+  <material name="left_White">
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
-  <material name="Silver">
+  <material name="left_Silver">
     <color rgba="0.753 0.753 0.753 1.0"/>
   </material>
   <link name="world"/>
-  <joint name="world_joint" type="fixed">
+  <joint name="left_world_joint" type="fixed">
     <parent link="world"/>
-    <child link="link_base"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <child link="left_link_base"/>
+    <origin rpy="0 0 0" xyz="-0.274 0.475 0.01"/>
   </joint>
-  <ros2_control name="uf_robot_hardware/UFRobotSystemHardware" type="system">
+  <ros2_control name="left_uf_robot_hardware/UFRobotSystemHardware" type="system">
     <hardware>
       <plugin>uf_robot_hardware/UFRobotSystemHardware</plugin>
-      <param name="hw_ns">xarm</param>
+      <param name="hw_ns">left_xarm</param>
       <param name="velocity_control">False</param>
-      <param name="prefix">P</param>
+      <param name="prefix">Pleft_</param>
       <param name="robot_ip">R</param>
       <param name="report_type">normal</param>
       <param name="dof">6</param>
@@ -46,7 +46,7 @@
       <!-- real xarm -->
       <!-- <plugin>uf_robot_hardware/UFRobotSystemHardware</plugin> -->
     </hardware>
-    <joint name="joint1">
+    <joint name="left_joint1">
       <command_interface name="position">
         <param name="min">-6.283185307179586</param>
         <param name="max">6.283185307179586</param>
@@ -59,7 +59,7 @@
       <state_interface name="velocity"/>
       <!-- <state_interface name="effort"/> -->
     </joint>
-    <joint name="joint2">
+    <joint name="left_joint2">
       <command_interface name="position">
         <param name="min">-2.3038346</param>
         <param name="max">2.3038346</param>
@@ -72,7 +72,7 @@
       <state_interface name="velocity"/>
       <!-- <state_interface name="effort"/> -->
     </joint>
-    <joint name="joint3">
+    <joint name="left_joint3">
       <command_interface name="position">
         <param name="min">-4.2236968</param>
         <param name="max">0.061087</param>
@@ -85,7 +85,7 @@
       <state_interface name="velocity"/>
       <!-- <state_interface name="effort"/> -->
     </joint>
-    <joint name="joint4">
+    <joint name="left_joint4">
       <command_interface name="position">
         <param name="min">-6.283185307179586</param>
         <param name="max">6.283185307179586</param>
@@ -98,7 +98,7 @@
       <state_interface name="velocity"/>
       <!-- <state_interface name="effort"/> -->
     </joint>
-    <joint name="joint5">
+    <joint name="left_joint5">
       <command_interface name="position">
         <param name="min">-2.1642</param>
         <param name="max">2.1642</param>
@@ -111,7 +111,7 @@
       <state_interface name="velocity"/>
       <!-- <state_interface name="effort"/> -->
     </joint>
-    <joint name="joint6">
+    <joint name="left_joint6">
       <command_interface name="position">
         <param name="min">-6.283185307179586</param>
         <param name="max">6.283185307179586</param>
@@ -125,7 +125,7 @@
       <!-- <state_interface name="effort"/> -->
     </joint>
   </ros2_control>
-  <link name="link_base">
+  <link name="left_link_base">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.00025599 -2.8579E-06 0.085749"/>
       <mass value="2.2684"/>
@@ -136,7 +136,7 @@
         <mesh filename="package://xarm_description/meshes/uf850/visual/link_base.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="White"/>
+      <material name="left_White"/>
     </visual>
     <collision>
       <geometry>
@@ -145,7 +145,7 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
   </link>
-  <link name="link1">
+  <link name="left_link1">
     <inertial>
       <origin rpy="0 0 0" xyz="5.7e-05 0.013842 -0.02055"/>
       <mass value="4.807"/>
@@ -156,7 +156,7 @@
         <mesh filename="package://xarm_description/meshes/uf850/visual/link1.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="White"/>
+      <material name="left_White"/>
     </visual>
     <collision>
       <geometry>
@@ -165,15 +165,15 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
   </link>
-  <joint name="joint1" type="revolute">
-    <parent link="link_base"/>
-    <child link="link1"/>
+  <joint name="left_joint1" type="revolute">
+    <parent link="left_link_base"/>
+    <child link="left_link1"/>
     <origin rpy="0 0 0" xyz="0 0 0.364"/>
     <axis xyz="0 0 1"/>
     <limit effort="200.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.14"/>
     <dynamics damping="16.6" friction="9.6"/>
   </joint>
-  <link name="link2">
+  <link name="left_link2">
     <inertial>
       <origin rpy="0 0 0" xyz="0.323425 9.5e-05 0.007586"/>
       <mass value="3.28"/>
@@ -184,7 +184,7 @@
         <mesh filename="package://xarm_description/meshes/uf850/visual/link2.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="White"/>
+      <material name="left_White"/>
     </visual>
     <collision>
       <geometry>
@@ -193,15 +193,15 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
   </link>
-  <joint name="joint2" type="revolute">
-    <parent link="link1"/>
-    <child link="link2"/>
+  <joint name="left_joint2" type="revolute">
+    <parent link="left_link1"/>
+    <child link="left_link2"/>
     <origin rpy="1.5708 -1.5708 0" xyz="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="200.0" lower="-2.3038346" upper="2.3038346" velocity="3.14"/>
     <dynamics damping="12.5" friction="12.1"/>
   </joint>
-  <link name="link3">
+  <link name="left_link3">
     <inertial>
       <origin rpy="0 0 0" xyz="0.128834 0.11341 0.00978"/>
       <mass value="2.237"/>
@@ -212,7 +212,7 @@
         <mesh filename="package://xarm_description/meshes/uf850/visual/link3.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="White"/>
+      <material name="left_White"/>
     </visual>
     <collision>
       <geometry>
@@ -221,15 +221,15 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
   </link>
-  <joint name="joint3" type="revolute">
-    <parent link="link2"/>
-    <child link="link3"/>
+  <joint name="left_joint3" type="revolute">
+    <parent link="left_link2"/>
+    <child link="left_link3"/>
     <origin rpy="-3.1416 0 -1.5708" xyz="0.39 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="90.0" lower="-4.2236968" upper="0.061087" velocity="3.14"/>
     <dynamics damping="4.0" friction="5.5"/>
   </joint>
-  <link name="link4">
+  <link name="left_link4">
     <inertial>
       <origin rpy="0 0 0" xyz="0.000266 -0.03833 -0.101915"/>
       <mass value="2.041"/>
@@ -240,7 +240,7 @@
         <mesh filename="package://xarm_description/meshes/uf850/visual/link4.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="White"/>
+      <material name="left_White"/>
     </visual>
     <collision>
       <geometry>
@@ -249,15 +249,15 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
   </link>
-  <joint name="joint4" type="revolute">
-    <parent link="link3"/>
-    <child link="link4"/>
+  <joint name="left_joint4" type="revolute">
+    <parent link="left_link3"/>
+    <child link="left_link4"/>
     <origin rpy="-1.5708 0 0" xyz="0.15 0.426 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="68.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.14"/>
     <dynamics damping="3.6" friction="2.2"/>
   </joint>
-  <link name="link5">
+  <link name="left_link5">
     <inertial>
       <origin rpy="0 0 0" xyz="5.7e-05 -0.015267 -0.001015"/>
       <mass value="1.385"/>
@@ -268,7 +268,7 @@
         <mesh filename="package://xarm_description/meshes/uf850/visual/link5.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="White"/>
+      <material name="left_White"/>
     </visual>
     <collision>
       <geometry>
@@ -277,15 +277,15 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
   </link>
-  <joint name="joint5" type="revolute">
-    <parent link="link4"/>
-    <child link="link5"/>
+  <joint name="left_joint5" type="revolute">
+    <parent link="left_link4"/>
+    <child link="left_link5"/>
     <origin rpy="-1.5708 0 0" xyz="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="19.0" lower="-2.1642" upper="2.1642" velocity="3.14"/>
     <dynamics damping="3.45" friction="3.2"/>
   </joint>
-  <link name="link6">
+  <link name="left_link6">
     <inertial>
       <origin rpy="0 0 0" xyz="0.000484 -0.000334 -0.014217"/>
       <mass value="0.225"/>
@@ -296,7 +296,7 @@
         <mesh filename="package://xarm_description/meshes/uf850/visual/link6.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="White"/>
+      <material name="left_White"/>
     </visual>
     <collision>
       <geometry>
@@ -305,9 +305,9 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
   </link>
-  <joint name="joint6" type="revolute">
-    <parent link="link5"/>
-    <child link="link6"/>
+  <joint name="left_joint6" type="revolute">
+    <parent link="left_link5"/>
+    <child link="left_link6"/>
     <origin rpy="1.5708 0 0" xyz="0 -0.09 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="19.0" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.14"/>
@@ -319,111 +319,111 @@
       <parent link="${prefix}link6" />
       <child link="${prefix}link_eef" />
     </joint> -->
-  <transmission name="tran1">
+  <transmission name="left_tran1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint1">
+    <joint name="left_joint1">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor1">
+    <actuator name="left_motor1">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>100</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="tran2">
+  <transmission name="left_tran2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint2">
+    <joint name="left_joint2">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor2">
+    <actuator name="left_motor2">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>100</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="tran3">
+  <transmission name="left_tran3">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint3">
+    <joint name="left_joint3">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor3">
+    <actuator name="left_motor3">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>100</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="tran4">
+  <transmission name="left_tran4">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint4">
+    <joint name="left_joint4">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor4">
+    <actuator name="left_motor4">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>100</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="tran5">
+  <transmission name="left_tran5">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint5">
+    <joint name="left_joint5">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor5">
+    <actuator name="left_motor5">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>100</mechanicalReduction>
     </actuator>
   </transmission>
-  <transmission name="tran6">
+  <transmission name="left_tran6">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint6">
+    <joint name="left_joint6">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor6">
+    <actuator name="left_motor6">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>100</mechanicalReduction>
     </actuator>
   </transmission>
-  <gazebo reference="link_base">
+  <gazebo reference="left_link_base">
     <selfCollide>true</selfCollide>
   </gazebo>
-  <gazebo reference="link1">
+  <gazebo reference="left_link1">
     <selfCollide>true</selfCollide>
   </gazebo>
-  <gazebo reference="link2">
+  <gazebo reference="left_link2">
     <selfCollide>true</selfCollide>
   </gazebo>
-  <gazebo reference="link3">
+  <gazebo reference="left_link3">
     <selfCollide>true</selfCollide>
   </gazebo>
-  <gazebo reference="link4">
+  <gazebo reference="left_link4">
     <selfCollide>true</selfCollide>
   </gazebo>
-  <gazebo reference="link5">
+  <gazebo reference="left_link5">
     <selfCollide>true</selfCollide>
   </gazebo>
-  <gazebo reference="link6">
+  <gazebo reference="left_link6">
     <selfCollide>true</selfCollide>
   </gazebo>
-  <link name="link_eef"/>
-  <joint name="joint_eef" type="fixed">
+  <link name="left_link_eef"/>
+  <joint name="left_joint_eef" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0"/>
-    <parent link="link6"/>
-    <child link="link_eef"/>
+    <parent link="left_link6"/>
+    <child link="left_link_eef"/>
   </joint>
   <!-- Insert at the end of xarm_device_macro.xacro -->
   <!-- Mounts an Allegro Hand V4 (left/right) on an arm flange, via the lab wrist
        adapter or a direct fixed joint. -->
   <!-- Root base_link (virtual link for reference frame) -->
-  <link name="hand_base_link"/>
+  <link name="left_hand_base_link"/>
   <!-- Fixed joint connecting base_link to palm_link -->
-  <joint name="hand_base_to_palm_joint" type="fixed">
-    <parent link="hand_base_link"/>
-    <child link="hand_palm_link"/>
+  <joint name="left_hand_base_to_palm_joint" type="fixed">
+    <parent link="left_hand_base_link"/>
+    <child link="left_hand_palm_link"/>
     <origin rpy="0 0 0" xyz="0 0 0.095"/>
   </joint>
-  <link name="hand_palm_link">
+  <link name="left_hand_palm_link">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/palm_link_left.STL"/>
       </geometry>
       <origin rpy="-1.5707963259 0 0" xyz="0 0 0 "/>
-      <material name="hand_black">
+      <material name="left_hand_black">
         <color rgba="0.2 0.2 0.2 1"/>
       </material>
     </visual>
@@ -439,12 +439,12 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <link name="hand_link_00">
+  <link name="left_hand_link_00">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_t.0.left.STL"/>
       </geometry>
-      <material name="hand_black">
+      <material name="left_hand_black">
         <color rgba=".2 .2 .2 1"/>
       </material>
       <origin rpy="3.1415926518 0 0" xyz="0 0 0"/>
@@ -461,20 +461,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint00" type="revolute">
+  <joint name="left_hand_joint00" type="revolute">
     <axis xyz="+1 0 0"/>
     <limit effort="15" lower="0.263" upper="1.396" velocity="7"/>
-    <parent link="hand_palm_link"/>
-    <child link="hand_link_00"/>
+    <parent link="left_hand_palm_link"/>
+    <child link="left_hand_link_00"/>
     <origin rpy="0 -1.6580627884499999 1.5707963259" xyz="-0.0182 -0.019333 -0.045987"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_01">
+  <link name="left_hand_link_01">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_t.1.STL"/>
       </geometry>
-      <material name="hand_black">
+      <material name="left_hand_black">
         <color rgba=".2 .2 .2 1"/>
       </material>
     </visual>
@@ -490,20 +490,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint01" type="revolute">
+  <joint name="left_hand_joint01" type="revolute">
     <axis xyz="0 0 -1"/>
     <limit effort="15" lower="-0.10499999999999998" upper="1.1629999999999998" velocity="7"/>
-    <parent link="hand_link_00"/>
-    <child link="hand_link_01"/>
+    <parent link="left_hand_link_00"/>
+    <child link="left_hand_link_01"/>
     <origin xyz="-0.027 -0.005 0.0399"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_02">
+  <link name="left_hand_link_02">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_t.2.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -517,20 +517,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint02" type="revolute">
+  <joint name="left_hand_joint02" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.18899999999999997" upper="1.644" velocity="7"/>
-    <parent link="hand_link_01"/>
-    <child link="hand_link_02"/>
+    <parent link="left_hand_link_01"/>
+    <child link="left_hand_link_02"/>
     <origin xyz="0 0 0.0177"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_03">
+  <link name="left_hand_link_03">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_t.3.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -544,20 +544,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint03" type="revolute">
+  <joint name="left_hand_joint03" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.162" upper="1.7189999999999999" velocity="7"/>
-    <parent link="hand_link_02"/>
-    <child link="hand_link_03"/>
+    <parent link="left_hand_link_02"/>
+    <child link="left_hand_link_03"/>
     <origin xyz="0 0 0.0514"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_04">
+  <link name="left_hand_link_04">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_t.4.STL"/>
       </geometry>
-      <material name="hand_white">
+      <material name="left_hand_white">
         <color rgba=".9 .9 .9 1"/>
       </material>
     </visual>
@@ -573,17 +573,17 @@
       <inertia ixx="9.68e-07" ixy="0" ixz="0" iyy="9.68e-07" iyz="0" izz="9.68e-07"/>
     </inertial>
   </link>
-  <joint name="hand_joint.04" type="fixed">
-    <parent link="hand_link_03"/>
-    <child link="hand_link_04"/>
+  <joint name="left_hand_joint.04" type="fixed">
+    <parent link="left_hand_link_03"/>
+    <child link="left_hand_link_04"/>
     <origin rpy="0 0 0" xyz="0 0 0.042300000000000004"/>
   </joint>
-  <link name="hand_link_10">
+  <link name="left_hand_link_10">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.0.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -597,20 +597,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint10" type="revolute">
+  <joint name="left_hand_joint10" type="revolute">
     <axis xyz="0 0 1"/>
     <limit effort="15" lower="-0.47" upper="0.47" velocity="7"/>
-    <parent link="hand_palm_link"/>
-    <child link="hand_link_10"/>
+    <parent link="left_hand_palm_link"/>
+    <child link="left_hand_link_10"/>
     <origin rpy="0.08726646254999999 0 0" xyz="0 -0.0435 -0.001542"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_11">
+  <link name="left_hand_link_11">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.1.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -624,20 +624,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint11" type="revolute">
+  <joint name="left_hand_joint11" type="revolute">
     <limit effort="15" lower="-0.19599999999999998" upper="1.6099999999999999" velocity="7"/>
     <axis xyz="0 1 0"/>
-    <parent link="hand_link_10"/>
-    <child link="hand_link_11"/>
+    <parent link="left_hand_link_10"/>
+    <child link="left_hand_link_11"/>
     <origin xyz="0 0 0.0164"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_12">
+  <link name="left_hand_link_12">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.2.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -651,20 +651,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint12" type="revolute">
+  <joint name="left_hand_joint12" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.17400000000000002" upper="1.7089999999999999" velocity="7"/>
-    <parent link="hand_link_11"/>
-    <child link="hand_link_12"/>
+    <parent link="left_hand_link_11"/>
+    <child link="left_hand_link_12"/>
     <origin xyz="0 0 0.054"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_13">
+  <link name="left_hand_link_13">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.3.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -678,20 +678,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint13" type="revolute">
+  <joint name="left_hand_joint13" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.227" upper="1.6179999999999999" velocity="7"/>
-    <parent link="hand_link_12"/>
-    <child link="hand_link_13"/>
+    <parent link="left_hand_link_12"/>
+    <child link="left_hand_link_13"/>
     <origin xyz="0 0 0.0384"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_14">
+  <link name="left_hand_link_14">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.4.STL"/>
       </geometry>
-      <material name="hand_white">
+      <material name="left_hand_white">
         <color rgba=".9 .9 .9 1"/>
       </material>
     </visual>
@@ -706,17 +706,17 @@
       <inertia ixx="9.68e-07" ixy="0" ixz="0" iyy="9.68e-07" iyz="0" izz="9.68e-07"/>
     </inertial>
   </link>
-  <joint name="hand_joint.14" type="fixed">
-    <parent link="hand_link_13"/>
-    <child link="hand_link_14"/>
+  <joint name="left_hand_joint.14" type="fixed">
+    <parent link="left_hand_link_13"/>
+    <child link="left_hand_link_14"/>
     <origin rpy="0 0 0" xyz="0 0 0.026699999999999998"/>
   </joint>
-  <link name="hand_link_20">
+  <link name="left_hand_link_20">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.0.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -730,20 +730,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint20" type="revolute">
+  <joint name="left_hand_joint20" type="revolute">
     <axis xyz="0 0 1"/>
     <limit effort="15" lower="-0.47" upper="0.47" velocity="7"/>
-    <parent link="hand_palm_link"/>
-    <child link="hand_link_20"/>
+    <parent link="left_hand_palm_link"/>
+    <child link="left_hand_link_20"/>
     <origin rpy="0.0 0 0" xyz="0 0 0.0007"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_21">
+  <link name="left_hand_link_21">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.1.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -757,20 +757,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint21" type="revolute">
+  <joint name="left_hand_joint21" type="revolute">
     <limit effort="15" lower="-0.19599999999999998" upper="1.6099999999999999" velocity="7"/>
     <axis xyz="0 1 0"/>
-    <parent link="hand_link_20"/>
-    <child link="hand_link_21"/>
+    <parent link="left_hand_link_20"/>
+    <child link="left_hand_link_21"/>
     <origin xyz="0 0 0.0164"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_22">
+  <link name="left_hand_link_22">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.2.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -784,20 +784,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint22" type="revolute">
+  <joint name="left_hand_joint22" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.17400000000000002" upper="1.7089999999999999" velocity="7"/>
-    <parent link="hand_link_21"/>
-    <child link="hand_link_22"/>
+    <parent link="left_hand_link_21"/>
+    <child link="left_hand_link_22"/>
     <origin xyz="0 0 0.054"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_23">
+  <link name="left_hand_link_23">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.3.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -811,20 +811,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint23" type="revolute">
+  <joint name="left_hand_joint23" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.227" upper="1.6179999999999999" velocity="7"/>
-    <parent link="hand_link_22"/>
-    <child link="hand_link_23"/>
+    <parent link="left_hand_link_22"/>
+    <child link="left_hand_link_23"/>
     <origin xyz="0 0 0.0384"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_24">
+  <link name="left_hand_link_24">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.4.STL"/>
       </geometry>
-      <material name="hand_white">
+      <material name="left_hand_white">
         <color rgba=".9 .9 .9 1"/>
       </material>
     </visual>
@@ -839,17 +839,17 @@
       <inertia ixx="9.68e-07" ixy="0" ixz="0" iyy="9.68e-07" iyz="0" izz="9.68e-07"/>
     </inertial>
   </link>
-  <joint name="hand_joint.24" type="fixed">
-    <parent link="hand_link_23"/>
-    <child link="hand_link_24"/>
+  <joint name="left_hand_joint.24" type="fixed">
+    <parent link="left_hand_link_23"/>
+    <child link="left_hand_link_24"/>
     <origin rpy="0 0 0" xyz="0 0 0.026699999999999998"/>
   </joint>
-  <link name="hand_link_30">
+  <link name="left_hand_link_30">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.0.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -863,20 +863,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint30" type="revolute">
+  <joint name="left_hand_joint30" type="revolute">
     <axis xyz="0 0 1"/>
     <limit effort="15" lower="-0.47" upper="0.47" velocity="7"/>
-    <parent link="hand_palm_link"/>
-    <child link="hand_link_30"/>
+    <parent link="left_hand_palm_link"/>
+    <child link="left_hand_link_30"/>
     <origin rpy="-0.08726646254999999 0 0" xyz="0 0.0435 -0.001542"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_31">
+  <link name="left_hand_link_31">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.1.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -890,20 +890,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint31" type="revolute">
+  <joint name="left_hand_joint31" type="revolute">
     <limit effort="15" lower="-0.19599999999999998" upper="1.6099999999999999" velocity="7"/>
     <axis xyz="0 1 0"/>
-    <parent link="hand_link_30"/>
-    <child link="hand_link_31"/>
+    <parent link="left_hand_link_30"/>
+    <child link="left_hand_link_31"/>
     <origin xyz="0 0 0.0164"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_32">
+  <link name="left_hand_link_32">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.2.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -917,20 +917,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint32" type="revolute">
+  <joint name="left_hand_joint32" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.17400000000000002" upper="1.7089999999999999" velocity="7"/>
-    <parent link="hand_link_31"/>
-    <child link="hand_link_32"/>
+    <parent link="left_hand_link_31"/>
+    <child link="left_hand_link_32"/>
     <origin xyz="0 0 0.054"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_33">
+  <link name="left_hand_link_33">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.3.STL"/>
       </geometry>
-      <material name="hand_black"/>
+      <material name="left_hand_black"/>
     </visual>
     <collision>
       <geometry>
@@ -944,20 +944,20 @@
       <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
   </link>
-  <joint name="hand_joint33" type="revolute">
+  <joint name="left_hand_joint33" type="revolute">
     <axis xyz="0 1 0"/>
     <limit effort="15" lower="-0.227" upper="1.6179999999999999" velocity="7"/>
-    <parent link="hand_link_32"/>
-    <child link="hand_link_33"/>
+    <parent link="left_hand_link_32"/>
+    <child link="left_hand_link_33"/>
     <origin xyz="0 0 0.0384"/>
     <dynamics damping="0.1" friction="0.01"/>
   </joint>
-  <link name="hand_link_34">
+  <link name="left_hand_link_34">
     <visual>
       <geometry>
         <mesh filename="package://allegro_hand_v4_description/meshes/link_f.4.STL"/>
       </geometry>
-      <material name="hand_white">
+      <material name="left_hand_white">
         <color rgba=".9 .9 .9 1"/>
       </material>
     </visual>
@@ -972,72 +972,72 @@
       <inertia ixx="9.68e-07" ixy="0" ixz="0" iyy="9.68e-07" iyz="0" izz="9.68e-07"/>
     </inertial>
   </link>
-  <joint name="hand_joint.34" type="fixed">
-    <parent link="hand_link_33"/>
-    <child link="hand_link_34"/>
+  <joint name="left_hand_joint.34" type="fixed">
+    <parent link="left_hand_link_33"/>
+    <child link="left_hand_link_34"/>
     <origin rpy="0 0 0" xyz="0 0 0.026699999999999998"/>
   </joint>
-  <gazebo reference="hand_palm_link">
+  <gazebo reference="left_hand_palm_link">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_00">
+  <gazebo reference="left_hand_link_00">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_01">
+  <gazebo reference="left_hand_link_01">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_02">
+  <gazebo reference="left_hand_link_02">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_03">
+  <gazebo reference="left_hand_link_03">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_10">
+  <gazebo reference="left_hand_link_10">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_11">
+  <gazebo reference="left_hand_link_11">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_12">
+  <gazebo reference="left_hand_link_12">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_13">
+  <gazebo reference="left_hand_link_13">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_20">
+  <gazebo reference="left_hand_link_20">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_21">
+  <gazebo reference="left_hand_link_21">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_22">
+  <gazebo reference="left_hand_link_22">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_23">
+  <gazebo reference="left_hand_link_23">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_30">
+  <gazebo reference="left_hand_link_30">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_31">
+  <gazebo reference="left_hand_link_31">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_32">
+  <gazebo reference="left_hand_link_32">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_33">
+  <gazebo reference="left_hand_link_33">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_04">
+  <gazebo reference="left_hand_link_04">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_14">
+  <gazebo reference="left_hand_link_14">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_24">
+  <gazebo reference="left_hand_link_24">
     <self_collide>false</self_collide>
   </gazebo>
-  <gazebo reference="hand_link_34">
+  <gazebo reference="left_hand_link_34">
     <self_collide>false</self_collide>
   </gazebo>
   <!-- Lab wrist adapter plate (flange -> Allegro hand) and camera holder.
@@ -1045,13 +1045,13 @@
        hand_mount_xyz/rpy: CAD connector -> palm pose, composed with the inverse of
        the Allegro macro's 0.095 m base_link -> palm_link offset. -->
   <!-- Adapter plate -->
-  <link name="hand_connector">
+  <link name="left_hand_connector">
     <visual>
       <geometry>
         <mesh filename="package://role_ros2/robot_ik/xarm/meshes/visual/final_connector.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <material name="lab_adapter_red">
+      <material name="left_lab_adapter_red">
         <color rgba="0.8 0.0 0.0 1.0"/>
       </material>
     </visual>
@@ -1067,22 +1067,22 @@
       <inertia ixx="1e-5" ixy="0.0" ixz="0.0" iyy="1e-5" iyz="0.0" izz="1e-5"/>
     </inertial>
   </link>
-  <joint name="link_eef_to_hand_connector_joint" type="fixed">
-    <parent link="link_eef"/>
-    <child link="hand_connector"/>
+  <joint name="left_link_eef_to_hand_connector_joint" type="fixed">
+    <parent link="left_link_eef"/>
+    <child link="left_hand_connector"/>
     <origin rpy="0 0 0" xyz="-0.05 -0.025 0.003"/>
   </joint>
-  <joint name="hand_connector_to_hand_mount_joint" type="fixed">
-    <parent link="hand_connector"/>
-    <child link="hand_base_link"/>
+  <joint name="left_hand_connector_to_hand_mount_joint" type="fixed">
+    <parent link="left_hand_connector"/>
+    <child link="left_hand_base_link"/>
     <origin rpy="0 -1.57 1.57" xyz="0.05007565 0.08399994 0.05892435"/>
   </joint>
-  <link name="camera_connector">
+  <link name="left_camera_connector">
     <visual>
       <geometry>
         <mesh filename="package://role_ros2/robot_ik/xarm/meshes/visual/camera_holder.stl"/>
       </geometry>
-      <material name="lab_adapter_red"/>
+      <material name="left_lab_adapter_red"/>
     </visual>
     <collision>
       <geometry>
@@ -1095,16 +1095,16 @@
       <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
     </inertial>
   </link>
-  <joint name="camera_connector_to_link_eef_joint" type="fixed">
-    <parent link="link_eef"/>
-    <child link="camera_connector"/>
+  <joint name="left_camera_connector_to_link_eef_joint" type="fixed">
+    <parent link="left_link_eef"/>
+    <child link="left_camera_connector"/>
     <origin rpy="3.14 0 -0.8" xyz="0 0 0.003"/>
   </joint>
   <!-- Camera mount point -->
-  <link name="camera_virtual_base"/>
-  <joint name="camera_connector_to_camera_virtual_base_joint" type="fixed">
-    <parent link="camera_connector"/>
-    <child link="camera_virtual_base"/>
+  <link name="left_camera_virtual_base"/>
+  <joint name="left_camera_connector_to_camera_virtual_base_joint" type="fixed">
+    <parent link="left_camera_connector"/>
+    <child link="left_camera_virtual_base"/>
     <origin rpy="0 0.785 0" xyz="-0.11 0 -0.07"/>
   </joint>
 </robot>

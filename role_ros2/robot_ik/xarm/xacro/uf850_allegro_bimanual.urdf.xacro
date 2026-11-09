@@ -8,10 +8,11 @@
   <xacro:arg name="prefix_1" default="left_" />
   <xacro:arg name="prefix_2" default="right_" />
 
-  <!-- Arm base poses in the world frame -->
-  <xacro:arg name="attach_xyz_1" default="-0.274 -0.475 0.01" />
+  <!-- Arm base poses in the world frame (x forward, y left), as in dex_bimanual_telep
+       urdf/bidex/uf850_allegro_bimanual.urdf -->
+  <xacro:arg name="attach_xyz_1" default="-0.274 0.475 0.01" />
   <xacro:arg name="attach_rpy_1" default="0 0 0" />
-  <xacro:arg name="attach_xyz_2" default="-0.274 0.475 0.01" />
+  <xacro:arg name="attach_xyz_2" default="-0.274 -0.475 0.01" />
   <xacro:arg name="attach_rpy_2" default="0 0 0" />
 
   <xacro:arg name="dof_1" default="6" />

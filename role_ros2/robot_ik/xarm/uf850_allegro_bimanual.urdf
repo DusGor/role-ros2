@@ -23,7 +23,7 @@
   <joint name="left_world_joint" type="fixed">
     <parent link="world"/>
     <child link="left_link_base"/>
-    <origin rpy="0 0 0" xyz="-0.274 -0.475 0.01"/>
+    <origin rpy="0 0 0" xyz="-0.274 0.475 0.01"/>
   </joint>
   <ros2_control name="left_uf_robot_hardware/UFRobotSystemHardware" type="system">
     <hardware>
@@ -423,7 +423,7 @@
   <joint name="right_world_joint" type="fixed">
     <parent link="world"/>
     <child link="right_link_base"/>
-    <origin rpy="0 0 0" xyz="-0.274 0.475 0.01"/>
+    <origin rpy="0 0 0" xyz="-0.274 -0.475 0.01"/>
   </joint>
   <ros2_control name="right_uf_robot_hardware/UFRobotSystemHardware" type="system">
     <hardware>

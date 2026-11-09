@@ -42,3 +42,13 @@ right_arm:
   auto_reset_on_startup: false
   auto_reset_delay: 5.0
   ee_frame_id: "right_link_base"  # frame of ee_pose / arm_state
+
+# ============================================================================
+# Allegro Hands (allegro_hand_bringup config/v4/dual_hand: one controller_manager,
+# right ahr_ on can0 / hand_id 0, left ahl_ on can1 / hand_id 1)
+# Home pose, move tolerance/timeout: allegro_hand_config.yaml
+# ============================================================================
+hands:
+  enabled: true
+  right_namespace: "right_hand"
+  left_namespace: "left_hand"

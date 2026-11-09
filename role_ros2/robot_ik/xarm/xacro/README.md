@@ -22,7 +22,7 @@ provides `xarm_description`) and [`allegro_hand_ros2`](https://github.com/DusGor
 ```
 
 Workflow: edit xacro → `./generate_urdfs.sh` → check in RViz
-(`ros2 launch role_ros2 xarm_allegro_robot.launch.py use_mock:=true hand_use_mock:=true`)
+(`ros2 launch role_ros2 xarm_allegro_robot.launch.py setup:=right use_mock:=true hand_use_mock:=true`)
 → commit the `.xacro` **and** the regenerated `.urdf` together.
 
 ## Files
@@ -40,12 +40,13 @@ fork [DusGor/allegro_hand_ros2_v4](https://github.com/DusGor/allegro_hand_ros2_v
 **The hand appears to float above the adapter plate.** Wonik's palm mesh lacks the back cover
 that the lab's hands have. Visual only; the kinematics are correct.
 
-Important xacro args: `attach_xyz_1/2` (arm base positions, bimanual),
+Important xacro args: `attach_xyz_1/2` (arm base positions, bimanual; single arm: `attach_xyz`),
 `add_camera_mount`, `connector_xyz/rpy`.
 
 ## Joint names
-- Single arm: `joint1`–`joint6`, `hand_joint00`–`hand_joint33`
-- Bimanual: `left_/right_joint1`–`6`, `left_/right_hand_joint00`–`33`
+- All models: `left_/right_joint1`–`6`, `left_/right_hand_joint00`–`33`, frames `left_/right_link_base`, …
+- `uf850_allegro_{left,right}` are exactly one side of `uf850_allegro_bimanual` (same names, same base
+  pose in `world`: left at y = +0.475, right at y = −0.475)
 - The Allegro driver publishes `ah_joint…`; `allegro_hand_interface_node` renames them.
 
 ## Runtime requirements

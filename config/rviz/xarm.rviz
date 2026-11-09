@@ -73,42 +73,42 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        link1:
+        right_link1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link2:
+        right_link2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link3:
+        right_link3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link4:
+        right_link4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link5:
+        right_link5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link6:
+        right_link6:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_base:
+        right_link_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link_eef:
+        right_link_eef:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -127,21 +127,21 @@ Visualization Manager:
         All Enabled: true
         world:
           Value: true
-        link1:
+        right_link1:
           Value: true
-        link2:
+        right_link2:
           Value: true
-        link3:
+        right_link3:
           Value: true
-        link4:
+        right_link4:
           Value: true
-        link5:
+        right_link5:
           Value: true
-        link6:
+        right_link6:
           Value: true
-        link_base:
+        right_link_base:
           Value: true
-        link_eef:
+        right_link_eef:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -150,21 +150,21 @@ Visualization Manager:
       Show Names: false
       Tree:
         world:
-          link_base:
-            link1:
-              link2:
-                link3:
-                  link4:
-                    link5:
-                      link6:
-                        link_eef:
+          right_link_base:
+            right_link1:
+              right_link2:
+                right_link3:
+                  right_link4:
+                    right_link5:
+                      right_link6:
+                        right_link_eef:
                           {}
       Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: link_base
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
