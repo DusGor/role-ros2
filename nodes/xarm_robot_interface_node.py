@@ -232,6 +232,7 @@ class MockXArmInterface:
         ang = np.asarray(angles[:self.n_dof], dtype=np.float64)
         with self._lock:
             self._target_positions = ang
+        self._step_to_target()
         return 0
 
     def set_position(self, x=None, y=None, z=None, roll=None, pitch=None,
