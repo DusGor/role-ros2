@@ -71,7 +71,7 @@ from where it is to the teleop target with bounded speed and acceleration (`ramp
 `engage_min_duration`), then streams with `max_velocity_*`. A pause or reset message (`match_control`
 start 0, `robot_reset`) or `stream_timeout` without messages stop commanding until the next OK gesture. Operator facing
 the robot: `teleop_send_msg_real_robot.py --mapping absolute --mirror` (human left drives the robot's right side;
-IK and collision check run on the mirrored robot). With `--mapping
+hand poses mirrored before IK, so IK and collision check run on the real robot). With `--mapping
 absolute`, the hand skeleton is shown in RViz (`/teleop/hand_skeleton`, mock: flat hand).
 
 Operation (calibration, Quest app restarts): [`README_meta_quest_teleop.md`](../../README_meta_quest_teleop.md),
