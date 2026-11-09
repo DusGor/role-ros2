@@ -1,0 +1,37 @@
+# Meta Quest teleop bridge (zmq_ros2_node) configuration.
+# Values are launch-argument defaults for meta_quest_teleop.launch.py.
+# Upstream sender: https://github.com/YufengJin/dex_bimanual_telep
+#   (hand_tracker_meta_quest_v2.py -> teleop_send_msg_real_robot.py -> broker.py)
+
+# ZMQ broker backend (broker.py binds XPUB on :5556). The container uses host
+# networking, so localhost reaches a broker running on the host.
+server_ip: "localhost"
+port: 5556
+# Broker frontend (broker.py XSUB :5555): measured joints go back as robot_joint_state.
+frontend_port: 5555
+
+# Required on the command line: which sides to command, arm and hand each: right | left | bimanual.
+# Namespaces and frames follow the robot launches ({side}_arm, {side}_hand, {side}_link_base).
+setup: ""
+
+# false = streaming servo mode (required on hardware).
+arm_command_blocking: false
+
+# Nothing is commanded before an OK gesture (match_control). Each OK gesture moves the robot from
+# where it is to the teleop target with these limits; pause, robot_reset or stream_timeout without
+# messages stop commanding until the next OK gesture.
+ramp_max_velocity_arm: 0.5  # rad/s
+ramp_max_velocity_hand: 1.5
+ramp_max_acceleration_arm: 1.0  # rad/s^2
+ramp_max_acceleration_hand: 5.0
+engage_min_duration: 2.0  # s, ramp limits apply at least this long after an OK gesture
+stream_timeout: 1.0  # s
+
+# Per-joint speed limit while streaming (rad/s).
+max_velocity_arm: 1.0
+max_velocity_hand: 3.0
+
+
+# RViz hand skeleton (/teleop/hand_skeleton): both (a hand whose arm is not commanded is drawn
+# next to the commanded arm), commanded, none.
+hand_skeleton: "both"

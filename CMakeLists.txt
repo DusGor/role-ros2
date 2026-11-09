@@ -124,6 +124,11 @@ install(PROGRAMS
   DESTINATION lib/${PROJECT_NAME}
   RENAME allegro_hand_interface
 )
+install(PROGRAMS
+  nodes/zmq_ros2_node.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME zmq_ros2_node
+)
 
 # Note: scripts/ directory contains pure Python scripts (not ROS2 nodes)
 # They should be run directly with python3, e.g.:

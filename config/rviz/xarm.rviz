@@ -117,9 +117,21 @@ Visualization Manager:
         Mass: false
       Name: RobotModel
       TF Prefix: ""
-      Update Interval: 1
+      Update Interval: 0
       Value: true
       Visual Enabled: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: HandSkeleton
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /teleop/hand_skeleton
+      Value: true
     - Class: rviz_default_plugins/TF
       Enabled: true
       Frame Timeout: 15
